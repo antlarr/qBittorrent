@@ -94,6 +94,11 @@ if (GUI)
     add_subdirectory(gui)
 endif (GUI)
 
+if (GUI AND UNIX)
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/icons/skin/download.png DESTINATION share/icons/hicolor/256x256/actions RENAME qbittorrent-download.png)
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/icons/skin/seeding.png DESTINATION share/icons/hicolor/256x256/actions RENAME qbittorrent-seeding.png)
+endif ()
+
 if (WEBUI)
     add_subdirectory(webui)
 endif (WEBUI)

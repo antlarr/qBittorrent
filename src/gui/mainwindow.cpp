@@ -1515,14 +1515,21 @@ void MainWindow::updateGUI()
 #ifndef Q_OS_MAC
     if (m_systrayIcon) {
 #ifdef Q_OS_UNIX
+	QString downloadImgPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "icons/hicolor/256x256/actions/qbittorrent-download.png");
+	QString seedingImgPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "icons/hicolor/256x256/actions/qbittorrent-seeding.png");
+	QString downloadImgTag, seedingImgTag;
+        if (!downloadImgPath.isEmpty())
+	   downloadImgTag = QString("<img src='%1' width='18' height='18'/>&nbsp;").arg(downloadImgPath);
+        if (!seedingImgPath.isEmpty())
+	   seedingImgTag = QString("<img src='%1' width='18' height='18'/>&nbsp;").arg(seedingImgPath);
         QString html = "<div style='background-color: #678db2; color: #fff;height: 18px; font-weight: bold; margin-bottom: 5px;'>";
         html += "qBittorrent";
         html += "</div>";
-        html += "<div style='vertical-align: baseline; height: 18px;'>";
-        html += "<img src=':/icons/skin/download.png' height='14'/>&nbsp;" + tr("DL speed: %1", "e.g: Download speed: 10 KiB/s").arg(Utils::Misc::friendlyUnit(status.payloadDownloadRate, true));
+        html += "<br><div>";
+        html += downloadImgTag + tr("DL speed: %1", "e.g: Download speed: 10 KiB/s").arg(Utils::Misc::friendlyUnit(status.payloadDownloadRate, true));
         html += "</div>";
-        html += "<div style='vertical-align: baseline; height: 18px;'>";
-        html += "<img src=':/icons/skin/seeding.png' height='14'/>&nbsp;" + tr("UP speed: %1", "e.g: Upload speed: 10 KiB/s").arg(Utils::Misc::friendlyUnit(status.payloadUploadRate, true));
+        html += "<br><div>";
+        html += seedingImgTag + tr("UP speed: %1", "e.g: Upload speed: 10 KiB/s").arg(Utils::Misc::friendlyUnit(status.payloadUploadRate, true));
         html += "</div>";
 #else
         // OSes such as Windows do not support html here
